@@ -1,0 +1,9 @@
+<div class="jumbotron">
+    Welcome <strong><%=  if assigns[:current_user] do @current_user.first_name end %>!</strong>
+</div>
+
+<div id="lobby"></div>
+<div id="messages"></div>
+<input id="chat-input" type="text"></input>
+
+<% gettext "Welcome to %{name}", name: "Phoenix!" %>
