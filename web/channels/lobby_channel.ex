@@ -37,12 +37,8 @@ defmodule Ph2.LobbyChannel do
     {:noreply, socket}
   end
 
-  intercept ["game_invite"]
+  intercept ["game_invite", "new_msg"]
   def handle_out("game_invite", %{"username" => username, "sender" => sender}, socket)do
-    Logger.debug "> game_invite ----- "
-    Logger.debug "> game_invite username #{inspect username}"
-    Logger.debug "> game_invite socket.assigns.current_user.first_name #{inspect socket.assigns.current_user.first_name}"
-    Logger.debug "< game_invite ----- "
     if socket.assigns.current_user.first_name == username && sender != username do
       push socket, "game_invite", %{ username: sender}
     end
@@ -50,6 +46,7 @@ defmodule Ph2.LobbyChannel do
   end
 
  def handle_in("new_msg", %{"body" => body}, socket) do
+    Logger.debug "> handle_in new_msg "
     broadcast! socket, "new_msg", %{body: body,
                                     time: Ecto.Time.to_string(Ecto.Time.utc),
                                     username: socket.assigns.current_user.first_name}
@@ -57,6 +54,7 @@ defmodule Ph2.LobbyChannel do
   end
 
   def handle_out("new_msg", response, socket) do
+    Logger.debug "> handle_out new_msg  #{inspect response}"
     push socket, "new_msg", response
     {:noreply, socket}
   end

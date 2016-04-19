@@ -11,8 +11,8 @@ config :ph2, Ph2.Endpoint,
   root: Path.dirname(__DIR__),
   secret_key_base: "8MFZ0sqZrsu7szmYS0LmndbzaGf9k9321wR7Qbdag/VzjMxsLO8jBOgMezV+q92I",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Ph2.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  #pubsub: [name: Ph2.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Ph2.PubSub, adapter: Phoenix.PubSub.Redis, host: "127.0.0.1"]
 
 # Configures Elixir's Logger
 config :logger, :console,
